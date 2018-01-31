@@ -102,12 +102,12 @@ select {
 .xbutton {
   background-color : red;
   float : right;
-  height : 15px;
-  width : 15px;
-  font-size : 10px;
+  height : 20px;
+  width : 20px;
+  font-size : 12px;
   color : white;
   border-radius : 50%;
-  padding-right : 5px;
+  border : 0;
 }
 
 

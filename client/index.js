@@ -49,18 +49,12 @@ fetch('/api/attractions')
     activity.appendChild(createdActivityTag);
   }
 
+
   document.getElementById("hotels-add").addEventListener("click", function() {
     const select = document.getElementById('hotels-choices');
     const selectedId = select.value;
     const list = document.getElementById('hotels-list');
     const createdHotelListItem = document.createElement('li');
-    const button = document.createElement('button');
-    button.innerHTML = '×';
-    button.classList.add('xbutton');
-    createdHotelListItem.append(button);
-    button.onclick = function() {
-      createdHotelListItem.remove();
-    }
     createdHotelListItem.appendChild(document.createTextNode(selectedId));
     list.appendChild(createdHotelListItem);
     const hotelsArray = attractions.hotels;
@@ -69,7 +63,16 @@ fetch('/api/attractions')
     })
     const coords = foundHotel.place.location;
     
-    buildMarker('hotels', coords).addTo(map);
+    const marker = buildMarker('hotels', coords).addTo(map);
+    
+    const button = document.createElement('button');
+    button.innerHTML = '×';
+    button.classList.add('xbutton');
+    createdHotelListItem.append(button);
+    button.onclick = function() {
+      createdHotelListItem.remove();
+      marker.remove();
+    }
   })
   
   document.getElementById("activities-add").addEventListener("click", function () {
@@ -84,11 +87,20 @@ fetch('/api/attractions')
       return obj.name === selectedId;
     })
     const coords = foundActivity.place.location;
+    
+    const marker = buildMarker('activities', coords).addTo(map);
 
-    buildMarker('activities', coords).addTo(map);
-
+    const button = document.createElement('button');
+    button.innerHTML = '×';
+    button.classList.add('xbutton');
+    createdActivityListItem.append(button);
+    button.onclick = function () {
+      createdActivityListItem.remove();
+      marker.remove();
+    }
+    
   })
-
+  
   document.getElementById("restaurants-add").addEventListener("click", function () {
     const select = document.getElementById('restaurants-choices');
     const selectedId = select.value;
@@ -102,7 +114,15 @@ fetch('/api/attractions')
     })
     const coords = foundRestaurant.place.location;
 
-    buildMarker('restaurants', coords).addTo(map);
+    const marker = buildMarker('restaurants', coords).addTo(map);
+    const button = document.createElement('button');
+    button.innerHTML = '×';
+    button.classList.add('xbutton');
+    createdRestaurantListItem.append(button);
+    button.onclick = function () {
+      createdRestaurantListItem.remove();
+      marker.remove();
+    }
   })
 
   
