@@ -1,7 +1,6 @@
 const mapboxgl = require("mapbox-gl");
 const buildMarker = require("./marker.js");
-// const sequelize = require('Sequelize')
-// const {Hotel, Restaurant, Activity} = require('../models')
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWRld2FhbCIsImEiOiJjamQxdWtnNDUwaWU5MzNxZGRsOGw1dTN3In0.ZPZYioFsfTn1fNFC1a8v6w';
 
@@ -55,6 +54,13 @@ fetch('/api/attractions')
     const selectedId = select.value;
     const list = document.getElementById('hotels-list');
     const createdHotelListItem = document.createElement('li');
+    const button = document.createElement('button');
+    button.innerHTML = '×';
+    button.classList.add('xbutton');
+    createdHotelListItem.append(button);
+    button.onclick = function() {
+      createdHotelListItem.remove();
+    }
     createdHotelListItem.appendChild(document.createTextNode(selectedId));
     list.appendChild(createdHotelListItem);
     const hotelsArray = attractions.hotels;

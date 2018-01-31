@@ -99,5 +99,15 @@ select {
   background: #286090;
 }
 
+.xbutton {
+  background-color : red;
+  float : right;
+  height : 15px;
+  width : 15px;
+  font-size : 10px;
+  color : white;
+  border-radius : 50%;
+  padding-right : 5px;
+}
 
 
