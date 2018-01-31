@@ -606,6 +606,7 @@ fetch('/api/attractions')
     button.classList.add('xbutton');
     createdHotelListItem.append(button);
     button.onclick = function() {
+      delete button.onclick            //so no memory bleed?
       createdHotelListItem.remove();
       marker.remove();
     }
@@ -631,6 +632,7 @@ fetch('/api/attractions')
     button.classList.add('xbutton');
     createdActivityListItem.append(button);
     button.onclick = function () {
+      delete button.onclick;
       createdActivityListItem.remove();
       marker.remove();
     }
@@ -656,6 +658,7 @@ fetch('/api/attractions')
     button.classList.add('xbutton');
     createdRestaurantListItem.append(button);
     button.onclick = function () {
+      delete button.onclick;
       createdRestaurantListItem.remove();
       marker.remove();
     }

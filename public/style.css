@@ -108,6 +108,7 @@ select {
   color : white;
   border-radius : 50%;
   border : 0;
+  clear : both;
 }
 
 

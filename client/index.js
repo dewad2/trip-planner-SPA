@@ -17,7 +17,7 @@ const map = new mapboxgl.Map({
 const marker = buildMarker("activities", fullstackCoords);
 marker.addTo(map);
 
-fetch('/api/attractions')
+fetch('/api/attractions')     //this is the AJAX REQUEST, accessing the info that we got from our backend with a get request of the same '/api/attractions', making it available on our frontend
 .then(result => {
   return result.json()
 })
@@ -70,6 +70,7 @@ fetch('/api/attractions')
     button.classList.add('xbutton');
     createdHotelListItem.append(button);
     button.onclick = function() {
+      delete button.onclick            //so no memory bleed?
       createdHotelListItem.remove();
       marker.remove();
     }
@@ -95,6 +96,7 @@ fetch('/api/attractions')
     button.classList.add('xbutton');
     createdActivityListItem.append(button);
     button.onclick = function () {
+      delete button.onclick;
       createdActivityListItem.remove();
       marker.remove();
     }
@@ -120,6 +122,7 @@ fetch('/api/attractions')
     button.classList.add('xbutton');
     createdRestaurantListItem.append(button);
     button.onclick = function () {
+      delete button.onclick;
       createdRestaurantListItem.remove();
       marker.remove();
     }
