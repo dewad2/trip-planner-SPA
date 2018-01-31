@@ -60,121 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const mapboxgl = __webpack_require__(1);
-const buildMarker = __webpack_require__(3);
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWRld2FhbCIsImEiOiJjamQxdWtnNDUwaWU5MzNxZGRsOGw1dTN3In0.ZPZYioFsfTn1fNFC1a8v6w';
-
-const fullstackCoords = [-74.009, 40.705] // NY
-// const fullstackCoords = [-87.6320523, 41.8881084] // CHI
-
-const map = new mapboxgl.Map({
-  container: "map",
-  center: fullstackCoords, // FullStack coordinates
-  zoom: 12, // starting zoom
-  style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
-});
-
-const marker = buildMarker("activities", fullstackCoords);
-marker.addTo(map);
-
-fetch('/api/attractions')
-.then(result => {
-  return result.json()
-})
-.then(attractions => {
-  for(var i = 0; i < attractions.hotels.length; i++) {
-    const eachHotel = attractions.hotels[i];
-    const createdHotelTag = document.createElement('option')
-    createdHotelTag.text = eachHotel.name;
-    createdHotelTag.value = eachHotel.name;
-    const hotel = document.getElementById('hotels-choices')
-    hotel.appendChild(createdHotelTag);
-  }
-
-  for (var i = 0; i < attractions.restaurants.length; i++) {
-    const eachRestaurant = attractions.restaurants[i];
-    const createdRestaurantTag = document.createElement('option')
-    createdRestaurantTag.text = eachRestaurant.name;
-    createdRestaurantTag.value = eachRestaurant.name;
-    const restaurant = document.getElementById('restaurants-choices')
-    restaurant.appendChild(createdRestaurantTag);
-  }
-
-  for (var i = 0; i < attractions.activities.length; i++) {
-    const eachActivity = attractions.activities[i];
-    const createdActivityTag = document.createElement('option')
-    createdActivityTag.text = eachActivity.name;
-    createdActivityTag.value = eachActivity.name;
-    const activity = document.getElementById('activities-choices')
-    activity.appendChild(createdActivityTag);
-  }
-
-  document.getElementById("hotels-add").addEventListener("click", function() {
-    const select = document.getElementById('hotels-choices');
-    const selectedId = select.value;
-    const list = document.getElementById('hotels-list');
-    const createdHotelListItem = document.createElement('li');
-    createdHotelListItem.appendChild(document.createTextNode(selectedId));
-    list.appendChild(createdHotelListItem);
-    return Hotel.findOne({
-      where : {
-        name : selectedId
-      }
-    })
-    .then((foundHotel) => {
-      const coords = foundHotel.location;
-    })
-    buildMarker('hotels', coords).addTo(map);
-  })
-  
-  document.getElementById("activities-add").addEventListener("click", function () {
-    const select = document.getElementById('activities-choices');
-    const selectedId = select.value;
-    const list = document.getElementById('activities-list');
-    const createdActivityListItem = document.createElement('li');
-    createdActivityListItem.appendChild(document.createTextNode(selectedId));
-    list.appendChild(createdActivityListItem);
-  })
-
-  document.getElementById("restaurants-add").addEventListener("click", function () {
-    const select = document.getElementById('restaurants-choices');
-    const selectedId = select.value;
-    const list = document.getElementById('restaurants-list');
-    const createdRestaurantListItem = document.createElement('li');
-    createdRestaurantListItem.appendChild(document.createTextNode(selectedId));
-    list.appendChild(createdRestaurantListItem);
-  })
-
-  
-})
-.catch(console.error);
-
-
-// attractions.hotels = array
-//iterate through the array
-//at each element, get the 'name' value
-//create element
-//append that to the hotel option
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mapboxgl = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
@@ -641,6 +531,131 @@ module.exports={"$version":8,"$root":{"version":{"required":true,"type":"enum","
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const mapboxgl = __webpack_require__(0);
+const buildMarker = __webpack_require__(3);
+// const sequelize = require('Sequelize')
+// const {Hotel, Restaurant, Activity} = require('../models')
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWRld2FhbCIsImEiOiJjamQxdWtnNDUwaWU5MzNxZGRsOGw1dTN3In0.ZPZYioFsfTn1fNFC1a8v6w';
+
+const fullstackCoords = [-74.009, 40.705] // NY
+// const fullstackCoords = [-87.6320523, 41.8881084] // CHI
+
+const map = new mapboxgl.Map({
+  container: "map",
+  center: fullstackCoords, // FullStack coordinates
+  zoom: 12, // starting zoom
+  style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
+});
+
+const marker = buildMarker("activities", fullstackCoords);
+marker.addTo(map);
+
+fetch('/api/attractions')
+.then(result => {
+  return result.json()
+})
+.then(attractions => {
+  for(var i = 0; i < attractions.hotels.length; i++) {
+    const eachHotel = attractions.hotels[i];
+    const createdHotelTag = document.createElement('option')
+    createdHotelTag.text = eachHotel.name;
+    createdHotelTag.value = eachHotel.name;
+    const hotel = document.getElementById('hotels-choices')
+    hotel.appendChild(createdHotelTag);
+  }
+
+  for (var i = 0; i < attractions.restaurants.length; i++) {
+    const eachRestaurant = attractions.restaurants[i];
+    const createdRestaurantTag = document.createElement('option')
+    createdRestaurantTag.text = eachRestaurant.name;
+    createdRestaurantTag.value = eachRestaurant.name;
+    const restaurant = document.getElementById('restaurants-choices')
+    restaurant.appendChild(createdRestaurantTag);
+  }
+
+  for (var i = 0; i < attractions.activities.length; i++) {
+    const eachActivity = attractions.activities[i];
+    const createdActivityTag = document.createElement('option')
+    createdActivityTag.text = eachActivity.name;
+    createdActivityTag.value = eachActivity.name;
+    const activity = document.getElementById('activities-choices')
+    activity.appendChild(createdActivityTag);
+  }
+
+  document.getElementById("hotels-add").addEventListener("click", function() {
+    const select = document.getElementById('hotels-choices');
+    const selectedId = select.value;
+    const list = document.getElementById('hotels-list');
+    const createdHotelListItem = document.createElement('li');
+    createdHotelListItem.appendChild(document.createTextNode(selectedId));
+    list.appendChild(createdHotelListItem);
+    const hotelsArray = attractions.hotels;
+    const foundHotel = hotelsArray.find(function(obj) {
+      return obj.name === selectedId;
+    })
+    const coords = foundHotel.place.location;
+    
+    buildMarker('hotels', coords).addTo(map);
+  })
+  
+  document.getElementById("activities-add").addEventListener("click", function () {
+    const select = document.getElementById('activities-choices');
+    const selectedId = select.value;
+    const list = document.getElementById('activities-list');
+    const createdActivityListItem = document.createElement('li');
+    createdActivityListItem.appendChild(document.createTextNode(selectedId));
+    list.appendChild(createdActivityListItem);
+    const activitiesArray = attractions.activities;
+    const foundActivity = activitiesArray.find(function (obj) {
+      return obj.name === selectedId;
+    })
+    const coords = foundActivity.place.location;
+
+    buildMarker('activities', coords).addTo(map);
+
+  })
+
+  document.getElementById("restaurants-add").addEventListener("click", function () {
+    const select = document.getElementById('restaurants-choices');
+    const selectedId = select.value;
+    const list = document.getElementById('restaurants-list');
+    const createdRestaurantListItem = document.createElement('li');
+    createdRestaurantListItem.appendChild(document.createTextNode(selectedId));
+    list.appendChild(createdRestaurantListItem);
+    const restaurantsArray = attractions.restaurants;
+    const foundRestaurant = restaurantsArray.find(function (obj) {
+      return obj.name === selectedId;
+    })
+    const coords = foundRestaurant.place.location;
+
+    buildMarker('restaurants', coords).addTo(map);
+  })
+
+  
+})
+.catch(console.error);
+
+
+// attractions.hotels = array
+//iterate through the array
+//at each element, get the 'name' value
+//create element
+//append that to the hotel option
+
+
+
+
+
+
+
+
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
@@ -671,7 +686,7 @@ module.exports = g;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { Marker } = __webpack_require__(1);
+const { Marker } = __webpack_require__(0);
 
 const iconURLs = {
   hotels: "http://i.imgur.com/D9574Cu.png",

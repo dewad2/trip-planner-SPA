@@ -1,5 +1,7 @@
 const mapboxgl = require("mapbox-gl");
 const buildMarker = require("./marker.js");
+// const sequelize = require('Sequelize')
+// const {Hotel, Restaurant, Activity} = require('../models')
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWRld2FhbCIsImEiOiJjamQxdWtnNDUwaWU5MzNxZGRsOGw1dTN3In0.ZPZYioFsfTn1fNFC1a8v6w';
 
@@ -55,14 +57,12 @@ fetch('/api/attractions')
     const createdHotelListItem = document.createElement('li');
     createdHotelListItem.appendChild(document.createTextNode(selectedId));
     list.appendChild(createdHotelListItem);
-    return Hotel.findOne({
-      where : {
-        name : selectedId
-      }
+    const hotelsArray = attractions.hotels;
+    const foundHotel = hotelsArray.find(function(obj) {
+      return obj.name === selectedId;
     })
-    .then((foundHotel) => {
-      const coords = foundHotel.location;
-    })
+    const coords = foundHotel.place.location;
+    
     buildMarker('hotels', coords).addTo(map);
   })
   
@@ -73,6 +73,14 @@ fetch('/api/attractions')
     const createdActivityListItem = document.createElement('li');
     createdActivityListItem.appendChild(document.createTextNode(selectedId));
     list.appendChild(createdActivityListItem);
+    const activitiesArray = attractions.activities;
+    const foundActivity = activitiesArray.find(function (obj) {
+      return obj.name === selectedId;
+    })
+    const coords = foundActivity.place.location;
+
+    buildMarker('activities', coords).addTo(map);
+
   })
 
   document.getElementById("restaurants-add").addEventListener("click", function () {
@@ -82,6 +90,13 @@ fetch('/api/attractions')
     const createdRestaurantListItem = document.createElement('li');
     createdRestaurantListItem.appendChild(document.createTextNode(selectedId));
     list.appendChild(createdRestaurantListItem);
+    const restaurantsArray = attractions.restaurants;
+    const foundRestaurant = restaurantsArray.find(function (obj) {
+      return obj.name === selectedId;
+    })
+    const coords = foundRestaurant.place.location;
+
+    buildMarker('restaurants', coords).addTo(map);
   })
 
   
