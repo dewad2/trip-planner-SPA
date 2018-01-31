@@ -15,3 +15,90 @@ const map = new mapboxgl.Map({
 
 const marker = buildMarker("activities", fullstackCoords);
 marker.addTo(map);
+
+fetch('/api/attractions')
+.then(result => {
+  return result.json()
+})
+.then(attractions => {
+  for(var i = 0; i < attractions.hotels.length; i++) {
+    const eachHotel = attractions.hotels[i];
+    const createdHotelTag = document.createElement('option')
+    createdHotelTag.text = eachHotel.name;
+    createdHotelTag.value = eachHotel.name;
+    const hotel = document.getElementById('hotels-choices')
+    hotel.appendChild(createdHotelTag);
+  }
+
+  for (var i = 0; i < attractions.restaurants.length; i++) {
+    const eachRestaurant = attractions.restaurants[i];
+    const createdRestaurantTag = document.createElement('option')
+    createdRestaurantTag.text = eachRestaurant.name;
+    createdRestaurantTag.value = eachRestaurant.name;
+    const restaurant = document.getElementById('restaurants-choices')
+    restaurant.appendChild(createdRestaurantTag);
+  }
+
+  for (var i = 0; i < attractions.activities.length; i++) {
+    const eachActivity = attractions.activities[i];
+    const createdActivityTag = document.createElement('option')
+    createdActivityTag.text = eachActivity.name;
+    createdActivityTag.value = eachActivity.name;
+    const activity = document.getElementById('activities-choices')
+    activity.appendChild(createdActivityTag);
+  }
+
+  document.getElementById("hotels-add").addEventListener("click", function() {
+    const select = document.getElementById('hotels-choices');
+    const selectedId = select.value;
+    const list = document.getElementById('hotels-list');
+    const createdHotelListItem = document.createElement('li');
+    createdHotelListItem.appendChild(document.createTextNode(selectedId));
+    list.appendChild(createdHotelListItem);
+    return Hotel.findOne({
+      where : {
+        name : selectedId
+      }
+    })
+    .then((foundHotel) => {
+      const coords = foundHotel.location;
+    })
+    buildMarker('hotels', coords).addTo(map);
+  })
+  
+  document.getElementById("activities-add").addEventListener("click", function () {
+    const select = document.getElementById('activities-choices');
+    const selectedId = select.value;
+    const list = document.getElementById('activities-list');
+    const createdActivityListItem = document.createElement('li');
+    createdActivityListItem.appendChild(document.createTextNode(selectedId));
+    list.appendChild(createdActivityListItem);
+  })
+
+  document.getElementById("restaurants-add").addEventListener("click", function () {
+    const select = document.getElementById('restaurants-choices');
+    const selectedId = select.value;
+    const list = document.getElementById('restaurants-list');
+    const createdRestaurantListItem = document.createElement('li');
+    createdRestaurantListItem.appendChild(document.createTextNode(selectedId));
+    list.appendChild(createdRestaurantListItem);
+  })
+
+  
+})
+.catch(console.error);
+
+
+// attractions.hotels = array
+//iterate through the array
+//at each element, get the 'name' value
+//create element
+//append that to the hotel option
+
+
+
+
+
+
+
+

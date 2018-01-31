@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const path = require('path')
+const path = require('path');
+const apiRoute = require('../routes/api.js')
 
 const {db} = require('../models');
 
@@ -16,12 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //logging middleware
 app.use(morgan('dev'))
 
+app.use('/api', apiRoute);
 // catch 404 (i.e., no route was hit) and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
 
 // handle all errors (anything passed into `next()`)
 app.use(function(err, req, res, next) {
